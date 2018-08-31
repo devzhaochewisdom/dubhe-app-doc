@@ -233,7 +233,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/NoticeType'
-  /NoticesPushHistory:
+  /NoticesHistory:
     get:
       summary: 获取发送通知历史列表
       produces:
@@ -297,7 +297,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/NoticePushHistory'
+              $ref: '#/definitions/NoticeHistory'
     post:
       summary: 发送接口
       produces:
@@ -329,14 +329,14 @@ paths:
           schema:
              #值类型
               type: object
-              $ref: '#/definitions/NoticePushHistory'
-  /NoticePushHistory/{NoticePushHistoryId}:
+              $ref: '#/definitions/NoticeHistory'
+  /NoticeHistory/{NoticeHistoryId}:
     get:
       summary: 根据id查询发送通知详情
       produces:
         - application/json
       parameters:
-        - name: NoticePushHistoryId
+        - name: NoticeHistoryId
           in: path
           description: 要查询的通知的id,它是唯一标识
           required: true
@@ -346,7 +346,7 @@ paths:
         200:
           description: OK
           schema:
-              $ref: '#/definitions/NoticePushHistory'
+              $ref: '#/definitions/NoticeHistory'
   /Department/{companyId}:
     get:
       summary: 查询公司部门信息
@@ -436,7 +436,7 @@ definitions:
               type: string
               description: 通知类型名称
         description: 通知类型
-  NoticePushHistory:
+  NoticeHistory:
     type: object
     properties:
       id:
