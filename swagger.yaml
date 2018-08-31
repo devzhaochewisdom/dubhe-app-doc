@@ -1,120 +1,483 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  version: '1.0'
-  title: "dubheapp"
-  description: Polls is a simple API allowing consumers to view polls and vote in them.
-  license:
-    name: MIT
-    url: https://github.com/apiaryio/polls-api/blob/master/LICENSE
-host: polls.apiblueprint.org
-basePath: /
+  title: 后台管理系统API文档
+  description: 后台管理系统接口文档
+  version: 0.0.1
+
+host: dubhe-app-admin
+basePath: /api
 schemes:
-- http
-consumes:
-- application/json
-produces:
-- application/json
+  - http
+
 paths:
-  /questions:
-    x-summary: Questions Collection
+  /Notices:
     get:
-      summary: List All Questions
+      summary: 获取通知列表
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: companyId
+          type: integer
+          minimum: 0
+          required: true
+          description: 公司id.
+        - in: query
+          name: offset
+          type: integer
+          minimum: 0
+          required: true
+          description: 从第几条开始显示.
+        - in: query
+          name: limit
+          type: integer
+          minimum: 0
+          required: true
+          description: 每页显示条数.
+        - in: query
+          name: abstract
+          type: string
+          required: false
+          description: 摘要.
+        - in: query
+          name: partiton
+          type: integer
+          minimum: 0
+          required: false
+          description: 所属模块.
+        - in: query
+          name: noticeType
+          type: integer
+          minimum: 0
+          required: false
+          description: 所属类型
+        - in: query
+          name: updated_at
+          type: string
+          format: date-time
+          required: false
+          description: 更新时间.
       responses:
         200:
-          description: Successful Response
+          description: OK
+          headers:
+            total:
+              type: integer
+              minimum: 0
+              description: 数据总数
           schema:
             type: array
             items:
-              $ref: '#/definitions/Question'
-          examples:
-            application/json:
-              - question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 2048
-                  - choice: Python
-                    votes: 1024
-                  - choice: Objective-C
-                    votes: 512
-                  - choice: Ruby
-                    votes: 256
+              $ref: '#/definitions/Notice'
     post:
-      description: >-
-        You may create your own question using this action. It takes a JSON
-        object containing a question and a collection of answers in the
-        form of choices.
-      summary: Create a New Question
+      summary: 增加一个新通知
+      produces:
+        - application/json
+      #请求参数
       parameters:
-        - name: body
-          in: body
+          #参数key
+        - name: partiton
+          in: formData
+          description: 所属模块id
           required: true
-          schema:
-            $ref: '#/definitions/QuestionRequest'
-      responses:
-        201:
-          description: ''
-          schema:
-            $ref: '#/definitions/Question'
-          examples:
-            application/json:
-                question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 0
-                  - choice: Python
-                    votes: 0
-                  - choice: Objective-C
-                    votes: 0
-                  - choice: Ruby
-                    votes: 0
-definitions:
-  Question:
-    title: Question
-    type: object
-    properties:
-      question:
-        type: string
-      published_at:
-        type: string
-      choices:
-        type: array
-        items:
-          $ref: '#/definitions/Choice'
-    required:
-      - question
-      - published_at
-      - choices
-  Choice:
-    title: Choice
-    type: object
-    properties:
-      votes:
-        type: integer
-        format: int32
-      choice:
-        type: string
-    required:
-      - votes
-      - choice
-  QuestionRequest:
-    title: Question Request
-    type: object
-    properties:
-      question:
-        type: string
-      choices:
-        type: array
-        items:
+          type: integer
+          minimum: 0
+        - name: noticeTypeId
+          in: formData
+          description: 所属类型id
+          required: true
+          type: integer
+          minimum: 0
+        - name: title
+          in: formData
           type: string
-    required:
-      - question
-      - choices
-    example:
-      question: Favourite programming language?
-      choices:
-        - Swift
-        - Python
-        - Objective-C
-        - Ruby
+          description: 通知标题
+          required: true
+        - name: abstract
+          in: formData
+          type: string
+          description: 摘要
+          required: true
+        - name: imgId
+          in: formData
+          type: string
+          description: 图片id
+          required: true
+        - name: substance
+          in: formData
+          type: string
+          description: 具体内容
+          required: true
+        - name: status
+          in: formData
+          type: integer
+          minimum: 0
+          description: 紧急程度（默认为0）
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+             #值类型
+              type: object
+              $ref: '#/definitions/Notice'
+    patch:
+      summary: 修改通知
+      produces:
+        - application/json
+      #请求参数
+      parameters:
+          #参数key
+        - name: noticeId
+          in: query
+          description: 所选通知id
+          required: true
+          type: integer
+          minimum: 0
+        - name: partiton
+          in: formData
+          description: 所属模块id
+          required: true
+          type: integer
+          minimum: 0
+        - name: noticeTypeId
+          in: formData
+          description: 所属类型id
+          required: true
+          type: integer
+          minimum: 0
+        - name: title
+          in: formData
+          type: string
+          description: 通知标题
+          required: true
+        - name: abstract
+          in: formData
+          type: string
+          description: 摘要
+          required: true
+        - name: imgId
+          in: formData
+          type: string
+          description: 图片id
+          required: true
+        - name: substance
+          in: formData
+          type: string
+          description: 具体内容
+          required: true
+        - name: status
+          in: formData
+          type: integer
+          minimum: 0
+          description: 紧急程度
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+             #值类型
+              type: object
+              $ref: '#/definitions/Notice'
+  /Notice/{noticeId}:
+    get:
+      summary: 根据id查询通知
+      produces:
+        - application/json
+      parameters:
+        #上面接口中定义了{id}，则参数列表中必须包含参数id,并且请求类型为path
+        - name: noticeId
+          in: path
+          description: 要查询的通知的id,它是唯一标识
+          required: true
+          type: integer
+          minimum: 0
+      responses:
+        200:
+          description: OK
+          schema:
+              $ref: '#/definitions/Notice'
+    delete:
+      summary: 删除通知
+      parameters:
+        - name: noticeId
+          in: path
+          type: integer
+          minimum: 0
+          required: true
+      responses:
+        '204':
+          description: The resource was deleted successfully.
+  /NoticeType:
+    get:
+      summary: 获取通知类型列表
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: companyId
+          type: integer
+          minimum: 0
+          required: true
+          description: 公司id.
+        - in: query
+          name: partition
+          type: integer
+          minimum: 0
+          required: true
+          description: 通知模块.
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/NoticeType'
+  /NoticesPushHistory:
+    get:
+      summary: 获取发送通知历史列表
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: companyId
+          type: integer
+          minimum: 0
+          required: true
+          description: 公司id.
+        - in: query
+          name: offset
+          type: integer
+          minimum: 0
+          required: true
+          description: 从第几条开始显示.
+        - in: query
+          name: limit
+          type: integer
+          minimum: 0
+          required: true
+          description: 每页显示条数.
+        - in: query
+          name: abstract
+          type: string
+          required: false
+          description: 摘要.
+        - in: query
+          name: partiton
+          type: integer
+          minimum: 0
+          required: false
+          description: 所属模块.
+        - in: query
+          name: noticeType
+          type: integer
+          minimum: 0
+          required: false
+          description: 所属类型
+        - in: query
+          name: create_at
+          type: string
+          format: date-time
+          required: false
+          description: 发送时间.
+        - in: query
+          name: departmentId
+          type: integer
+          minimum: 0
+          required: false
+          description: 发送部门.
+      responses:
+        200:
+          description: OK
+          headers:
+            total:
+              type: integer
+              minimum: 0
+              description: 数据总数
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/NoticePushHistory'
+    post:
+      summary: 发送接口
+      produces:
+        - application/json
+      #请求参数
+      parameters:
+          #参数key
+        - name: noticeId
+          in: formData
+          description: 通知id
+          required: true
+          type: integer
+          minimum: 0
+        - name: department
+          in: formData
+          description: 发送部门id数组
+          required: true
+          type: integer
+          minimum: 0
+        - name: companyId
+          in: formData
+          type: integer
+          minimum: 0
+          description: 公司id
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+             #值类型
+              type: object
+              $ref: '#/definitions/NoticePushHistory'
+  /NoticePushHistory/{NoticePushHistoryId}:
+    get:
+      summary: 根据id查询发送通知详情
+      produces:
+        - application/json
+      parameters:
+        - name: NoticePushHistoryId
+          in: path
+          description: 要查询的通知的id,它是唯一标识
+          required: true
+          type: integer
+          minimum: 0
+      responses:
+        200:
+          description: OK
+          schema:
+              $ref: '#/definitions/NoticePushHistory'
+  /Department/{companyId}:
+    get:
+      summary: 查询公司部门信息
+      produces:
+        - application/json
+      parameters:
+        - name: companyId
+          in: path
+          description: 公司id
+          required: true
+          type: integer
+          minimum: 0
+      responses:
+        200:
+          description: OK
+          schema:
+              $ref: '#/definitions/Department'
+
+definitions:
+  Notice:
+    type: object
+    properties:
+      id:
+        type: integer
+        minimum: 0
+        description: 主键id
+      noticeTypeId:
+        type: integer
+        minimum: 0
+        description: 通知类型id
+      title:
+        type: string
+        description: 通知标题
+      abstract:
+        type: string
+        description: 摘要
+      imgId:
+        type: string
+        description: 图片id
+      substance: 
+        type: string
+        description: 内容
+      status: 
+        type: integer
+        minimum: 0
+        description: 紧急程度 
+      sys_addTime: 
+        type: string
+        format: date-time
+        description: 创建时间
+      sys_updateTime: 
+        type: string
+        format: date-time
+        description: 更新时间
+      sys_adder: 
+        type: integer
+        minimum: 0
+        description: 创建人id
+      sys_updator: 
+        type: integer
+        minimum: 0
+        description: 创建人id
+  NoticeType:
+    type: object
+    properties: 
+      companyId:
+        type: integer
+        minimum: 0
+        description: 公司id
+      partition:
+        type: integer
+        minimum: 0
+        description: 通知模块
+      partitionName:
+        type: string
+        description: 模块名称
+      noticeType:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: integer
+              minimum: 0
+              description: 通知类型id
+            name:
+              type: string
+              description: 通知类型名称
+        description: 通知类型
+  NoticePushHistory:
+    type: object
+    properties:
+      id:
+        type: integer
+        minimum: 0
+        description: 主键id
+      noticeTypeId:
+        type: integer
+        minimum: 0
+        description: 通知类型id     
+      noticeType:
+        type: string
+        description: 通知类型
+      partition:
+        type: integer
+        minimum: 0
+        description: 通知模块
+      sys_addTime: 
+        type: string
+        format: date-time
+        description: 发送时间
+      department: 
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                minimum: 0
+                description: 通知类型id
+              name:
+                type: string
+                description: 通知类型名称
+          description: 发送部门
+  Department:
+    type: object
+    properties:
+      id: 
+        type: integer
+        minimum: 0
+        description: 主键id
+      name:
+        type: string
+        description: 部门名称
