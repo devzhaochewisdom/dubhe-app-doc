@@ -383,10 +383,17 @@ definitions:
         type: integer
         minimum: 0
         description: 主键id
+      partition:
+        type: integer
+        minimum: 0
+        description: 所属模块
       noticeTypeId:
         type: integer
         minimum: 0
         description: 通知类型id
+      noticeType: 
+        type: string
+        description: 通知类型
       title:
         type: string
         description: 通知标题
