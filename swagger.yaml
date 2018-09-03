@@ -23,7 +23,7 @@ paths:
           required: true
           description: 公司id.
         - in: query
-          name: offset
+          name: offSet
           type: integer
           minimum: 0
           required: true
@@ -114,63 +114,11 @@ paths:
           minimum: 0
           description: 紧急程度（默认为0）
           required: true
-      responses:
-        200:
-          description: OK
-          schema:
-             #值类型
-              type: object
-              $ref: '#/definitions/Notice'
-    patch:
-      summary: 修改通知
-      produces:
-        - application/json
-      #请求参数
-      parameters:
-          #参数key
-        - name: noticeId
-          in: query
-          description: 所选通知id
-          required: true
-          type: integer
-          minimum: 0
-        - name: partiton
-          in: formData
-          description: 所属模块id
-          required: true
-          type: integer
-          minimum: 0
-        - name: noticeTypeId
-          in: formData
-          description: 所属类型id
-          required: true
-          type: integer
-          minimum: 0
-        - name: title
-          in: formData
-          type: string
-          description: 通知标题
-          required: true
-        - name: abstract
-          in: formData
-          type: string
-          description: 摘要
-          required: true
-        - name: imgId
-          in: formData
-          type: string
-          description: 图片id
-          required: true
-        - name: substance
-          in: formData
-          type: string
-          description: 具体内容
-          required: true
-        - name: status
+        - name: sys_adder
           in: formData
           type: integer
           minimum: 0
-          description: 紧急程度
+          description: 添加人id
           required: true
       responses:
         200:
@@ -197,11 +145,79 @@ paths:
           description: OK
           schema:
               $ref: '#/definitions/Notice'
+    patch:
+      summary: 修改通知
+      produces:
+        - application/json
+      #请求参数
+      parameters:
+          #参数key
+        - name: noticeId
+          in: path
+          description: 所选通知id
+          required: true
+          type: integer
+          minimum: 0
+        - name: partiton
+          in: formData
+          description: 所属模块id
+          required: false
+          type: integer
+          minimum: 0
+        - name: noticeTypeId
+          in: formData
+          description: 所属类型id
+          required: false
+          type: integer
+          minimum: 0
+        - name: title
+          in: formData
+          type: string
+          description: 通知标题
+          required: false
+        - name: abstract
+          in: formData
+          type: string
+          description: 摘要
+          required: false
+        - name: imgId
+          in: formData
+          type: string
+          description: 图片id
+          required: false
+        - name: substance
+          in: formData
+          type: string
+          description: 具体内容
+          required: false
+        - name: status
+          in: formData
+          type: integer
+          minimum: 0
+          description: 紧急程度
+          required: false
+        - name: sys_updator
+          in: formData
+          type: integer
+          description: 修改人id
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+             #值类型
+              type: object
+              $ref: '#/definitions/Notice'
     delete:
       summary: 删除通知
       parameters:
         - name: noticeId
           in: path
+          type: integer
+          minimum: 0
+          required: true
+        - name: userId
+          in: query
           type: integer
           minimum: 0
           required: true
@@ -220,12 +236,6 @@ paths:
           minimum: 0
           required: true
           description: 公司id.
-        - in: query
-          name: partition
-          type: integer
-          minimum: 0
-          required: true
-          description: 通知模块.
       responses:
         200:
           description: OK
@@ -380,15 +390,19 @@ definitions:
       title:
         type: string
         description: 通知标题
-      abstract:
-        type: string
-        description: 摘要
-      imgId:
-        type: string
-        description: 图片id
-      substance: 
-        type: string
-        description: 内容
+      contents: 
+        type: object
+        description: 通知内容
+        properties:
+          abstract:
+            type: string
+            description: 摘要
+          imgId:
+            type: string
+            description: 图片id
+          substance: 
+            type: string
+            description: 内容
       status: 
         type: integer
         minimum: 0
