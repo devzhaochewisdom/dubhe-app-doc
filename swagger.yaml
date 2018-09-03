@@ -436,10 +436,6 @@ definitions:
   NoticeType:
     type: object
     properties: 
-      companyId:
-        type: integer
-        minimum: 0
-        description: 公司id
       partition:
         type: integer
         minimum: 0
