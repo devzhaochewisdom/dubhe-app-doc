@@ -35,11 +35,6 @@ paths:
           required: true
           description: 每页显示条数.
         - in: query
-          name: abstract
-          type: string
-          required: false
-          description: 摘要.
-        - in: query
           name: partition
           type: integer
           minimum: 0
@@ -268,11 +263,6 @@ paths:
           required: true
           description: 每页显示条数.
         - in: query
-          name: abstract
-          type: string
-          required: false
-          description: 摘要.
-        - in: query
           name: partition
           type: integer
           minimum: 0
@@ -402,18 +392,8 @@ definitions:
         type: string
         description: 通知标题
       contents: 
-        type: object
+        type: string
         description: 通知内容
-        properties:
-          abstract:
-            type: string
-            description: 摘要
-          imgId:
-            type: string
-            description: 图片id
-          substance: 
-            type: string
-            description: 内容
       status: 
         type: integer
         minimum: 0
@@ -471,21 +451,40 @@ definitions:
         type: integer
         minimum: 0
         description: 主键id
-      noticeTypeId:
-        type: integer
-        minimum: 0
-        description: 通知类型id     
-      noticeType:
-        type: string
-        description: 通知类型
-      partition:
-        type: integer
-        minimum: 0
-        description: 通知模块
       sys_addTime: 
         type: string
         format: date-time
-        description: 发送时间
+        description: 创建时间
+      sys_updateTime: 
+        type: string
+        format: date-time
+        description: 更新时间
+      sys_adder: 
+        type: integer
+        minimum: 0
+        description: 创建人id
+      sys_updator: 
+        type: integer
+        minimum: 0
+        description: 创建人id
+      notice: 
+        type: object
+        properties: 
+          id:
+            type: integer
+            minimum: 0
+            description: 主键id
+          noticeTypeId:
+            type: integer
+            minimum: 0
+            description: 通知类型id
+          title:
+            type: string
+            description: 通知标题
+          contents: 
+            type: string
+            description: 通知内容
+        
       department: 
           type: array
           items:
