@@ -374,6 +374,17 @@ paths:
           description: OK
           schema:
               $ref: '#/definitions/Department'
+              
+  /api/OSSConfig/Notice:
+    get:
+      summary: 通知部分图片上传接口
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+              $ref: '#/definitions/UploadPathAndSignature'
 
 definitions:
   Notice:
@@ -498,3 +509,21 @@ definitions:
       name:
         type: string
         description: 部门名称
+  UploadPathAndSignature:
+    type: object
+    properties:
+      accessid: 
+        type: string
+        description: 用户请求的accessid
+      host:
+        type: string
+        description: 用户要往哪个域名发送上传请求
+      policy:
+        type: string
+        description: 用户表单上传的策略（Policy），是经过base64编码过的字符串
+      signature: 
+         type: string
+         description: 签名
+      expire: 
+        type: string
+        description: 上传策略失效时间
