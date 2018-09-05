@@ -331,11 +331,7 @@ paths:
           required: true
       responses:
         200:
-          description: OK
-          schema:
-             #值类型
-              type: object
-              $ref: '#/definitions/NoticeHistory'
+          description: notices push successfully
   /NoticeHistory/{NoticeHistoryId}:
     get:
       summary: 根据id查询发送通知详情
