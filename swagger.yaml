@@ -315,13 +315,19 @@ paths:
           in: formData
           description: 发送部门id数组
           required: true
-          type: integer
+          type: string
           minimum: 0
         - name: companyId
           in: formData
           type: integer
           minimum: 0
           description: 公司id
+          required: true
+        - name: sys_adder
+          in: formData
+          type: integer
+          minimum: 0
+          description: 添加人id
           required: true
       responses:
         200:
