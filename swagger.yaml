@@ -332,13 +332,13 @@ paths:
       responses:
         200:
           description: notices push successfully
-  /NoticeHistory/{NoticeHistoryId}:
+  /NoticeHistory/{noticeId}:
     get:
       summary: 根据id查询发送通知详情
       produces:
         - application/json
       parameters:
-        - name: NoticeHistoryId
+        - name: noticeId
           in: path
           description: 要查询的通知的id,它是唯一标识
           required: true
@@ -426,6 +426,9 @@ definitions:
           name: 
             type: string
             description: 类型名称
+      imgId:
+        type: string
+        description: 图片id
   NoticeType:
     type: object
     properties: 
@@ -497,15 +500,17 @@ definitions:
                 description: 通知类型名称
           description: 发送部门
   Department:
-    type: object
-    properties:
-      id: 
-        type: integer
-        minimum: 0
-        description: 主键id
-      name:
-        type: string
-        description: 部门名称
+    type: array
+    items: 
+      type: object
+      properties:
+        id: 
+          type: integer
+          minimum: 0
+          description: 主键id
+        name:
+          type: string
+          description: 部门名称
   UploadPathAndSignature:
     type: object
     properties:
