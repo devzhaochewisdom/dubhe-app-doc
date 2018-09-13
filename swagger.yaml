@@ -122,7 +122,7 @@ paths:
              #值类型
               type: object
               $ref: '#/definitions/Notice'
-  /Notice/{noticeId}:
+  /Notices/{noticeId}:
     get:
       summary: 根据id查询通知
       produces:
@@ -313,7 +313,7 @@ paths:
           minimum: 0
         - name: department
           in: formData
-          description: 发送部门id数组
+          description: 发送部门信息，这里只需要传部门和子部门的id和name就好，是一个json数组
           required: true
           type: string
           minimum: 0
