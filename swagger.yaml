@@ -426,9 +426,6 @@ definitions:
           name: 
             type: string
             description: 类型名称
-      imgId:
-        type: string
-        description: 图片id
   NoticeType:
     type: object
     properties: 
