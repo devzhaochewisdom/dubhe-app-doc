@@ -51,7 +51,13 @@ paths:
           type: string
           format: date-time
           required: false
-          description: 更新时间.
+          description: 结束时间.
+        - in: query
+          name: created_at
+          type: string
+          format: date-time
+          required: false
+          description: 开始时间.
       responses:
         200:
           description: OK
@@ -275,11 +281,17 @@ paths:
           required: false
           description: 所属类型
         - in: query
-          name: create_at
+          name: updated_at
           type: string
           format: date-time
           required: false
-          description: 发送时间.
+          description: 结束时间.
+        - in: query
+          name: created_at
+          type: string
+          format: date-time
+          required: false
+          description: 开始时间.
         - in: query
           name: departmentId
           type: integer
